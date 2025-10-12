@@ -1,0 +1,23 @@
+<div class="share-links">
+  <h3>Share Links</h3>
+
+  <% p = (local_assigns[:post] || @post) %>
+  <%= form_with url: share_links_path, local: true do |f| %>
+    <%= hidden_field_tag :post_id, p.id %>
+    <%= submit_tag "Create share link" %>
+  <% end %>
+
+  <ul>
+    <% p.share_links.order(created_at: :desc).each do |link| %>
+      <li id="share_link_<%= link.id %>">
+        <%= link_to share_link_url(link.token), share_link_url(link.token), target: "_blank" %>
+        (created: <%= link.created_at.to_s(:short) %>)
+        <% if link.revoked_at %>
+          <em>revoked</em>
+        <% else %>
+          <%= button_to 'Revoke', share_link_path(link), method: :delete %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

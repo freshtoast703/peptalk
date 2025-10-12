@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :posts
+  resources :users
+  # Public share link route
+  get '/s/:token', to: 'share_links#show', as: :share_link
+  # Admin routes to create and revoke share links
+  resources :share_links, only: [:create, :destroy]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
