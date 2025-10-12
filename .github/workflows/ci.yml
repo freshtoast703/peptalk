@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2.2'
+          bundler-cache: true
+
+      - name: Install dependencies (bundler cache)
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+
+      - name: Prepare test database
+        env:
+          RAILS_ENV: test
+        run: |
+          # Load schema for fast setup
+          bin/rails db:schema:load
+
+      - name: Run test suite
+        env:
+          RAILS_ENV: test
+        run: |
+          bin/rails test
