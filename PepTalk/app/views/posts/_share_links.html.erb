@@ -10,8 +10,10 @@
   <ul>
     <% p.share_links.order(created_at: :desc).each do |link| %>
       <li id="share_link_<%= link.id %>">
-        <%= link_to share_link_url(link.token), share_link_url(link.token), target: "_blank" %>
-        (created: <%= link.created_at.to_s(:short) %>)
+  <% url = share_link_url(link.token) rescue '#'%>
+  <a href="<%= url %>" target="_blank"><%= url %></a>
+  <% created = link.created_at %>
+  (created: <%= created ? created.iso8601 : 'n/a' %>)
         <% if link.revoked_at %>
           <em>revoked</em>
         <% else %>
