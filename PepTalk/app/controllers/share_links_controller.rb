@@ -2,7 +2,7 @@ class ShareLinksController < ApplicationController
   # Publicly accessible endpoint for shared posts — do not require auth here.
   # Admin actions (create/destroy) assume there's some authentication in place
   # (Devise `authenticate_user!` or similar). We call it conditionally if defined.
-  before_action :require_login_for_admin!, only: [:create, :destroy]
+  before_action :require_login_for_admin!, only: [ :create, :destroy ]
   def show
     @share_link = ShareLink.active.find_by(token: params[:token])
 
@@ -12,9 +12,9 @@ class ShareLinksController < ApplicationController
 
     # atomic increment
     ShareLink.where(id: @share_link.id)
-             .update_all('access_count = access_count + 1, last_accessed_at = CURRENT_TIMESTAMP')
+             .update_all("access_count = access_count + 1, last_accessed_at = CURRENT_TIMESTAMP")
 
-    render 'posts/show'
+    render "posts/show"
   end
 
   # Admin actions (optional): create/destroy

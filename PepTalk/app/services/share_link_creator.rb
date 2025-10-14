@@ -1,7 +1,7 @@
 class ShareLinkCreator
   DEFAULT_TOKEN_BYTES = 24
 
-  def initialize(post:, user: nil, expires_at: nil, permissions: 'read', token: nil, attempts: 5)
+  def initialize(post:, user: nil, expires_at: nil, permissions: "read", token: nil, attempts: 5)
     @post = post
     @user = user
     @expires_at = expires_at

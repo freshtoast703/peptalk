@@ -16,16 +16,16 @@ class ShareLinkCreatorTest < ActiveSupport::TestCase
   end
 
   test "retries on token collision and generates a different token" do
-    existing = @post.share_links.create!(token: 'fixedtoken', user: @user)
-    creator = ShareLinkCreator.new(post: @post, user: @user, token: 'fixedtoken', attempts: 3)
+    existing = @post.share_links.create!(token: "fixedtoken", user: @user)
+    creator = ShareLinkCreator.new(post: @post, user: @user, token: "fixedtoken", attempts: 3)
     link = creator.call
     assert link.persisted?
-    assert_not_equal 'fixedtoken', link.token
+    assert_not_equal "fixedtoken", link.token
   end
 
   test "raises when collisions exceed attempts" do
-    existing = @post.share_links.create!(token: 'fixedtoken', user: @user)
-    creator = ShareLinkCreator.new(post: @post, user: @user, token: 'fixedtoken', attempts: 1)
+    existing = @post.share_links.create!(token: "fixedtoken", user: @user)
+    creator = ShareLinkCreator.new(post: @post, user: @user, token: "fixedtoken", attempts: 1)
     assert_raises(ActiveRecord::RecordNotUnique) { creator.call }
   end
 end
