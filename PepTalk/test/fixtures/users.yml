@@ -4,10 +4,10 @@ one:
   first_name: MyString
   last_name: MyString
   mobile_number: MyString
-  email: MyString
+  email: user_one@example.com
 
 two:
   first_name: MyString
   last_name: MyString
   mobile_number: MyString
-  email: MyString
+  email: user_two@example.com
