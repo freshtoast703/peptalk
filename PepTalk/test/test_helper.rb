@@ -22,3 +22,20 @@ end
 class ActionController::TestCase
   include Devise::Test::ControllerHelpers
 end
+
+module TestHelpers
+  def create_user(attrs = {})
+    defaults = { first_name: "Test", last_name: "User", email: "test_#{SecureRandom.hex(4)}@example.com", mobile_number: "1234567890", password: "password123", password_confirmation: "password123" }
+    User.create!(defaults.merge(attrs))
+  end
+
+  def sign_in_user(user = nil)
+    user ||= create_user
+    sign_in user
+    user
+  end
+end
+
+class ActiveSupport::TestCase
+  include TestHelpers
+end
