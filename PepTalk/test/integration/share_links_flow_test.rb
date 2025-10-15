@@ -3,7 +3,7 @@ require "test_helper"
 class ShareLinksFlowTest < ActionDispatch::IntegrationTest
   def setup
     @post = Post.create!(title: "Public Post", description: "Hello")
-    @user = User.create!(first_name: "A", last_name: "B", email: "a@example.com", mobile_number: "123")
+  @user = User.create!(first_name: "A", last_name: "B", email: "a@example.com", mobile_number: "123", password: "password123", password_confirmation: "password123")
     @link = @post.share_links.create!(token: "validtoken", user: @user, expires_at: 1.day.from_now)
   end
 

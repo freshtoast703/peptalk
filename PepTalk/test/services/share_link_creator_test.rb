@@ -3,7 +3,7 @@ require "test_helper"
 class ShareLinkCreatorTest < ActiveSupport::TestCase
   def setup
     @post = Post.create!(title: "Hello")
-    @user = User.create!(first_name: "A", last_name: "B", email: "a@example.com", mobile_number: "123")
+  @user = User.create!(first_name: "A", last_name: "B", email: "a@example.com", mobile_number: "123", password: "password123", password_confirmation: "password123")
   end
 
   test "creates a share link with token and associations" do
