@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  # Mount Devise routes under /auth to avoid conflicting with the app's UsersController
+  devise_for :users, path: "auth"
+
   resources :posts
   resources :users
   # Public share link route
