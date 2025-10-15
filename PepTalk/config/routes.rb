@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   devise_for :users, path: "auth"
 
   resources :posts
-  resources :users
+  # Use Devise registrations for new/create (sign up). Keep other user admin actions.
+  resources :users, except: [:new, :create]
   # Public share link route
   get "/s/:token", to: "share_links#show", as: :share_link
   # Admin routes to create and revoke share links

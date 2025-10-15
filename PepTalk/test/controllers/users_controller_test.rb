@@ -11,16 +11,18 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
-    get new_user_url
+    # Devise provides the new registration path at /auth/sign_up
+    get new_user_registration_path
     assert_response :success
   end
 
   test "should create user" do
     assert_difference("User.count") do
-      post users_url, params: { user: { email: "new_user@example.com", first_name: @user.first_name, last_name: @user.last_name, mobile_number: @user.mobile_number, password: "password123", password_confirmation: "password123" } }
+      post user_registration_path, params: { user: { email: "new_user@example.com", first_name: @user.first_name, last_name: @user.last_name, mobile_number: @user.mobile_number, password: "password123", password_confirmation: "password123" } }
     end
 
-    assert_redirected_to user_url(User.last)
+    # Devise redirects to root by default after sign up; confirm user was created
+    assert_response :redirect
   end
 
   test "should show user" do
